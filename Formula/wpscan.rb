@@ -6,7 +6,7 @@ class Wpscan < Formula
   head "https://github.com/wpscanteam/wpscan.git"
 
   depends_on "pkg-config" => :build
-  depends_on ruby: "= 2.7.2"
+  depends_on ruby: "2.7.2"
 
   uses_from_macos "curl"
   uses_from_macos "unzip"
