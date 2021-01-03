@@ -7,6 +7,8 @@ class Wpscan < Formula
 
   depends_on "pkg-config" => :build
   depends_on "ruby"
+  depends_on "libxml2" # For Nokogiri
+  depends_on "libxslt" For Nokogiri
 
   uses_from_macos "curl"
   uses_from_macos "unzip"
