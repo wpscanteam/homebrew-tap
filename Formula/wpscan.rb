@@ -33,6 +33,7 @@ class Wpscan < Formula
     ENV["BUNDLE_PATH"] = libexec
     ENV["BUNDLE_GEMFILE"] = libexec/"Gemfile"
     system "gem", "install", "bundler"
+    system "gem install nokogiri --platform=ruby -- --use-system-libraries"
     bundle = Dir["#{libexec}/**/bundle"].last
     system bundle, "install", "--jobs=#{ENV.make_jobs}"
     wpscan = Dir["#{libexec}/ruby/**/bin/wpscan"].last
