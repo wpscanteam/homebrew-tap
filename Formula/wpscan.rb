@@ -12,8 +12,8 @@ class Wpscan < Formula
   uses_from_macos "unzip"
   uses_from_macos "xz" # for liblxma
   uses_from_macos "zlib"
-  uses_from_macos "libxml2" # For Nokogiri
-  uses_from_macos "libxslt" # For Nokogiri
+  # uses_from_macos "libxml2" # For Nokogiri
+  # uses_from_macos "libxslt" # For Nokogiri
 
   if MacOS.version < :catalina
     depends_on "libffi"
@@ -35,7 +35,7 @@ class Wpscan < Formula
     ENV["BUNDLE_PATH"] = libexec
     ENV["BUNDLE_GEMFILE"] = libexec/"Gemfile"
     system "gem", "install", "bundler"
-    system "gem install nokogiri --platform=ruby -- --use-system-libraries"
+    # system "gem install nokogiri --platform=ruby -- --use-system-libraries"
     bundle = Dir["#{libexec}/**/bundle"].last
     system bundle, "install", "--jobs=#{ENV.make_jobs}"
     wpscan = Dir["#{libexec}/ruby/**/bin/wpscan"].last
