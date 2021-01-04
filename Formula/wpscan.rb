@@ -1,8 +1,8 @@
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.org"
-  url "https://github.com/wpscanteam/wpscan/archive/v3.8.11.tar.gz"
-  sha256 "452869c7435c679116fc9eed70efc78ddcd27d165da2a9475dc8cf0d1ede2804"
+  url "https://github.com/wpscanteam/wpscan/archive/v3.8.12.tar.gz"
+  sha256 "876e6b37bec9596384ac45f602e359a372cde1dd4350681788436e0cdd7c942e"
   head "https://github.com/wpscanteam/wpscan.git"
 
   depends_on "pkg-config" => :build
@@ -12,8 +12,6 @@ class Wpscan < Formula
   uses_from_macos "unzip"
   uses_from_macos "xz" # for liblxma
   uses_from_macos "zlib"
-  # uses_from_macos "libxml2" # For Nokogiri
-  # uses_from_macos "libxslt" # For Nokogiri
 
   if MacOS.version < :catalina
     depends_on "libffi"
@@ -35,7 +33,6 @@ class Wpscan < Formula
     ENV["BUNDLE_PATH"] = libexec
     ENV["BUNDLE_GEMFILE"] = libexec/"Gemfile"
     system "gem", "install", "bundler"
-    # system "gem install nokogiri --platform=ruby -- --use-system-libraries"
     bundle = Dir["#{libexec}/**/bundle"].last
     system bundle, "install", "--jobs=#{ENV.make_jobs}"
     wpscan = Dir["#{libexec}/ruby/**/bin/wpscan"].last
