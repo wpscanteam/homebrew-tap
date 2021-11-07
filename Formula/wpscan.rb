@@ -19,13 +19,6 @@ class Wpscan < Formula
     uses_from_macos "libffi"
   end
 
-  # Fixes the --no-update commandline option
-  # https://github.com/wpscanteam/wpscan/pull/1455
-  patch do
-    url "https://github.com/mistydemeo/wpscan/commit/eed763944642416cb5245b4e0cd281cb161122b4.patch?full_index=1"
-    sha256 "0f532dfac5526e75b241e06c17127cd9b608f1450d685a696a2a122e5db545eb"
-  end
-
   def install
     inreplace "lib/wpscan.rb", /DB_DIR.*=.*$/, "DB_DIR = Pathname.new('#{var}/wpscan/db')"
     libexec.install Dir["*"]
