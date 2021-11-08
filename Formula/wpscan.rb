@@ -1,8 +1,8 @@
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.com/wordpress-security-scanner"
-  url "https://github.com/wpscanteam/wpscan/archive/v3.8.18.tar.gz"
-  sha256 "50a1d0c0aa5f8fe6d4c23e2ed607cfe4d924eacaecfed6979ceffe55c8a12cd0"
+  url "https://github.com/wpscanteam/wpscan/archive/v3.8.20.tar.gz"
+  sha256 "db599df94be10cab394aad4c7afafbbd1302346eea7f22aa9e97f81419652d6e"
   head "https://github.com/wpscanteam/wpscan.git"
 
   depends_on "pkg-config" => :build
@@ -17,13 +17,6 @@ class Wpscan < Formula
     depends_on "libffi"
   else
     uses_from_macos "libffi"
-  end
-
-  # Fixes the --no-update commandline option
-  # https://github.com/wpscanteam/wpscan/pull/1455
-  patch do
-    url "https://github.com/mistydemeo/wpscan/commit/eed763944642416cb5245b4e0cd281cb161122b4.patch?full_index=1"
-    sha256 "0f532dfac5526e75b241e06c17127cd9b608f1450d685a696a2a122e5db545eb"
   end
 
   def install
