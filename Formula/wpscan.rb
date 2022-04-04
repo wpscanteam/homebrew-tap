@@ -1,8 +1,8 @@
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.com/wordpress-security-scanner"
-  url "https://github.com/wpscanteam/wpscan/archive/v3.8.21.tar.gz"
-  sha256 "313354d66a58850bb2a6850e40e75eceb4bcd085bbfc792322a56d103d6aba26"
+  url "https://github.com/wpscanteam/wpscan/archive/v3.8.22.tar.gz"
+  sha256 "784282c0426c4ceee183411b8da5a310658d93ffead3d5a86febd84e3e37d653"
   head "https://github.com/wpscanteam/wpscan.git"
 
   depends_on "pkg-config" => :build
