@@ -5,8 +5,10 @@ class Wpscan < Formula
   sha256 "05391a1f36159db8999150576123944aeac0c2dbbd0b7f87a1f063bd5a6f3b06"
   head "https://github.com/wpscanteam/wpscan.git"
 
+  RUBY_FORMULA = "ruby@3.4"
+
   depends_on "pkg-config" => :build
-  depends_on "ruby"
+  depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
   uses_from_macos "unzip"
@@ -30,11 +32,11 @@ class Wpscan < Formula
     system bundle, "install", "--jobs=#{ENV.make_jobs}"
     wpscan = Dir["#{libexec}/ruby/**/bin/wpscan"].last
 
-    ruby_series = Formula["ruby"].version.to_s.split(".")[0..1].join(".")
+    ruby_series = Formula[RUBY_FORMULA].version.to_s.split(".")[0..1].join(".")
     (bin/"wpscan").write <<~EOS
       #!/bin/bash
       GEM_HOME="#{libexec}/ruby/#{ruby_series}.0" BUNDLE_GEMFILE="#{libexec}/Gemfile" \\
-        exec "#{bundle}" exec "#{Formula["ruby"].opt_bin}/ruby" \\
+        exec "#{Formula[RUBY_FORMULA].opt_bin}/ruby" "#{bundle}" exec \\
         "#{wpscan}" "$@"
     EOS
   end
