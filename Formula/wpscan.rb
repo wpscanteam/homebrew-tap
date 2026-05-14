@@ -11,15 +11,10 @@ class Wpscan < Formula
   depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
+  uses_from_macos "libffi", since: :big_sur
   uses_from_macos "unzip"
   uses_from_macos "xz" # for liblxma
   uses_from_macos "zlib"
-
-  if MacOS.version < :catalina
-    depends_on "libffi"
-  else
-    uses_from_macos "libffi"
-  end
 
   def install
     inreplace "lib/wpscan.rb", /DB_DIR.*=.*$/, "DB_DIR = Pathname.new('#{var}/wpscan/db')"
