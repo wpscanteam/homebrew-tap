@@ -11,7 +11,7 @@ class Wpscan < Formula
   depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
-  uses_from_macos "libffi", since: :big_sur
+  uses_from_macos "libffi", since: :catalina
   uses_from_macos "unzip"
   uses_from_macos "xz" # for liblxma
   uses_from_macos "zlib"
