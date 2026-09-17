@@ -8,12 +8,15 @@ class Wpscan < Formula
   RUBY_FORMULA = "ruby@3.4"
 
   depends_on "pkg-config" => :build
+  # nokogiri vendors libxml2 and extracts it with `xzcat` at build time. macOS does not
+  # ship an `xz`/`xzcat` binary, so `uses_from_macos "xz"` leaves it unavailable and the
+  # native extension build fails with `MiniPortile#xzcat_exe': xzcat not found`.
+  depends_on "xz" => :build
   depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
   uses_from_macos "libffi", since: :catalina
   uses_from_macos "unzip"
-  uses_from_macos "xz" # for liblxma
   uses_from_macos "zlib"
 
   def install
