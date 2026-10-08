@@ -8,6 +8,7 @@ class Wpscan < Formula
   RUBY_FORMULA = "ruby@3.4"
 
   depends_on "pkg-config" => :build
+  depends_on "xz" => :build # nokogiri needs xzcat to extract its vendored libxml2
   depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
