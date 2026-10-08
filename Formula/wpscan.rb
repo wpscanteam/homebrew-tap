@@ -8,6 +8,7 @@ class Wpscan < Formula
   RUBY_FORMULA = "ruby@3.4"
 
   depends_on "pkg-config" => :build
+  depends_on "xz" => :build # nokogiri needs xzcat to extract its vendored libxml2
   depends_on RUBY_FORMULA
 
   uses_from_macos "curl"
@@ -24,6 +25,9 @@ class Wpscan < Formula
     ENV["BUNDLE_GEMFILE"] = libexec/"Gemfile"
     system "gem", "install", "bundler"
     bundle = Dir["#{libexec}/**/bundle"].last
+    # Persist the BUNDLE_WITHOUT that superenv sets, so `bundle exec` in bin/wpscan
+    # does not look for the development and test gems that were never installed
+    system bundle, "config", "set", "--local", "without", "development:test"
     system bundle, "install", "--jobs=#{ENV.make_jobs}"
     wpscan = Dir["#{libexec}/ruby/**/bin/wpscan"].last
 
