@@ -1,0 +1,63 @@
+name: Install
+
+# Homebrew can break this formula without any change on our side (see #19),
+# so install it from source every day, not only on pull requests.
+on:
+  pull_request:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  install:
+    name: Install (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    steps:
+      # Installs the latest Homebrew and links this checkout as wpscanteam/tap
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Show Homebrew version
+        run: brew --version
+
+      - name: Install wpscan from source
+        run: brew install --build-from-source --verbose wpscanteam/tap/wpscan
+
+      - name: Run wpscan
+        run: wpscan --version
+
+      - name: Run formula test
+        run: brew test --verbose wpscanteam/tap/wpscan
+
+      # Not blocking yet: the formula has existing offenses to fix first.
+      # Deprecations show up here before Homebrew turns them into errors.
+      - name: Audit formula
+        continue-on-error: true
+        run: brew audit --strict --online wpscanteam/tap/wpscan
+
+  # GitHub disables scheduled workflows after 60 days without repository
+  # activity. Re-enabling the workflow resets that timer.
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Keep the schedule enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/install.yml/enable"
