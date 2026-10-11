@@ -49,6 +49,12 @@ jobs:
         continue-on-error: true
         run: brew audit --strict --online wpscanteam/tap/wpscan
 
+      # setup-homebrew symlinks the tap from the workspace, and brew audit then
+      # skips its RuboCop checks, so run them separately.
+      - name: Check formula style
+        continue-on-error: true
+        run: brew style wpscanteam/tap
+
   # GitHub disables scheduled workflows after 60 days without repository
   # activity. Re-enabling the workflow resets that timer.
   keepalive:
