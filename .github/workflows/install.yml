@@ -43,17 +43,14 @@ jobs:
       - name: Run formula test
         run: brew test --verbose wpscanteam/tap/wpscan
 
-      # Not blocking yet: the formula has existing offenses to fix first.
       # Deprecations show up here before Homebrew turns them into errors, so
       # run these even when the install fails.
       - name: Audit formula
         if: ${{ !cancelled() }}
-        continue-on-error: true
         run: brew audit --strict --online wpscanteam/tap/wpscan
 
       # setup-homebrew symlinks the tap from the workspace, and brew audit then
       # skips its RuboCop checks, so run them separately.
       - name: Check formula style
         if: ${{ !cancelled() }}
-        continue-on-error: true
         run: brew style wpscanteam/tap

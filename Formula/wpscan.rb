@@ -1,11 +1,11 @@
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.com/wordpress-security-scanner"
-  url "https://github.com/wpscanteam/wpscan/archive/v4.1.0.tar.gz"
+  url "https://github.com/wpscanteam/wpscan/archive/refs/tags/v4.1.0.tar.gz"
   sha256 "6211c5d1f88daf84e1949cff4309e8c12212409746a1cef26e1ee9d0a5d9395f"
-  head "https://github.com/wpscanteam/wpscan.git"
+  head "https://github.com/wpscanteam/wpscan.git", branch: "master"
 
-  RUBY_FORMULA = "ruby@3.4"
+  RUBY_FORMULA = "ruby@3.4".freeze
 
   depends_on "pkg-config" => :build
   depends_on "xz" => :build # nokogiri needs xzcat to extract its vendored libxml2
@@ -35,14 +35,14 @@ class Wpscan < Formula
     (bin/"wpscan").write <<~EOS
       #!/bin/bash
       GEM_HOME="#{libexec}/ruby/#{ruby_series}.0" BUNDLE_GEMFILE="#{libexec}/Gemfile" \\
-        exec "#{Formula[RUBY_FORMULA].opt_bin}/ruby" "#{bundle}" exec \\
+        exec "#{formula_opt_bin(RUBY_FORMULA)}/ruby" "#{bundle}" exec \\
         "#{wpscan}" "$@"
     EOS
   end
 
-  def post_install
+  post_install_steps do
     # Update database
-    system bin/"wpscan", "--update"
+    run "wpscan", args: ["--update"], base: :bin
   end
 
   test do
