@@ -1,8 +1,8 @@
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.com/wordpress-security-scanner"
-  url "https://github.com/wpscanteam/wpscan/archive/refs/tags/v4.2.0.tar.gz"
-  sha256 "fa140b4ed31741da80d6e5f936a3a8c6cc87a0c6ebe093d87e1248cd7596257d"
+  url "https://github.com/wpscanteam/wpscan/archive/refs/tags/v4.2.1.tar.gz"
+  sha256 "31c1c6ff21a0abf7cdb2b1390372ff0028f720c5d3a4cd4878cb5ba3ca7e6bbb"
   head "https://github.com/wpscanteam/wpscan.git", branch: "master"
 
   RUBY_FORMULA = "ruby@3.4".freeze
